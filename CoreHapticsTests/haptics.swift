@@ -9,7 +9,7 @@
 //The point of this class is to make the CoreHaptics system a bit easier to implement in a swiftui project.
 // Useage:
 // 1- Drop this file into a project.
-// 2- Where you want to use haptics create an instance of this class
+// 2- The view or controller etc. you want to use haptics create an instance of this class
 // 3- use yourClassInstance?.playSlice to play that haptic as defined below
 // 4- if you want to use an alternate code when haptics is not availible, follow #3 with ?? { what you want to do without haptics }()
 // 5- Define new haptic patterns using the format below in the HapticManager extensions
@@ -70,9 +70,24 @@ class HapticManager {
                 print("Failed to restart the engine: \(error)")
             }
         }
+        //NOTE: auto shutdown seems to be somewhere in the 2-3 minute range, have not tested with timers enough.
+        hapticEngine.isAutoShutdownEnabled = true
     }
     
+    //TODO: The two playHaptic functions might be better turned into a bool in the hapticManager init, set it to do one or the other for individual programs
+    //Use this for long stretches of haptic happterns, or when you want to pattern to start more quickly and consistently
     private func playHaptic(_ pattern : CHHapticPattern){
+        do {
+            try hapticEngine.start()
+            let player = try hapticEngine.makePlayer(with: pattern)
+            try player.start(atTime: CHHapticTimeImmediate)
+        } catch {
+            print("Failed to play Haptic: \(error)")
+        }
+    }
+    
+    //Use this for intermitent short haptics that do not need to be perfectly snappy
+    private func playShortHaptic(_ pattern : CHHapticPattern){
         do {
             try hapticEngine.start()
             let player = try hapticEngine.makePlayer(with: pattern)
@@ -89,6 +104,7 @@ class HapticManager {
 //Follow this format to create new haptic patterns.
 extension HapticManager {
 
+    //This code should either give us the pattern and run it, or it will fail to get the pattern and do nothing. The program will keep going without the haptic feedback. If there is some strange behavior you can probably handle it in here.
     func playSlice(){
         if let pattern = try? slicePattern() {
             playHaptic(pattern)
@@ -143,4 +159,27 @@ extension HapticManager {
         
         return try CHHapticPattern(events: [event], parameterCurves: [parameter])
     }
+}
+
+extension HapticManager{
+    func playSOS(){
+        if let pattern = try? SOSPattern() {
+            playHaptic(pattern)
+        }
+    }
+    
+    private func SOSPattern() throws -> CHHapticPattern {
+        let short1 = CHHapticEvent(eventType: .hapticTransient, parameters: [], relativeTime: 0)
+        let short2 = CHHapticEvent(eventType: .hapticTransient, parameters: [], relativeTime: 0.2)
+        let short3 = CHHapticEvent(eventType: .hapticTransient, parameters: [], relativeTime: 0.4)
+        let long1 = CHHapticEvent(eventType: .hapticContinuous, parameters: [], relativeTime: 0.6, duration: 0.5)
+        let long2 = CHHapticEvent(eventType: .hapticContinuous, parameters: [], relativeTime: 1.2, duration: 0.5)
+        let long3 = CHHapticEvent(eventType: .hapticContinuous, parameters: [], relativeTime: 1.8, duration: 0.5)
+        let short4 = CHHapticEvent(eventType: .hapticTransient, parameters: [], relativeTime: 2.4)
+        let short5 = CHHapticEvent(eventType: .hapticTransient, parameters: [], relativeTime: 2.6)
+        let short6 = CHHapticEvent(eventType: .hapticTransient, parameters: [], relativeTime: 2.8)
+        
+        return try CHHapticPattern(events: [short1, short2, short3, long1, long2, long3, short4, short5, short6], parameters: [])
+    }
+    
 }

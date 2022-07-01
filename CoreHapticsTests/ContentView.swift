@@ -7,14 +7,25 @@
 //Just a test field to make sure that things work and show the useage of the Class
 
 import SwiftUI
+struct ButtonCode{
+    var closure: (() -> Void)?
+    var name: String
+}
+
+
+
 
 struct ContentView: View {
     //This version lets us call any haptic event via the below button, if its availible and not nil it will run the function, if not nothing happens. Pretty clean implementation.
     private var hapticManager = HapticManager()
     
+    let layout = [
+        GridItem(.adaptive(minimum: 80, maximum: 200)),
+    ]
+    
     var body: some View {
-        VStack{
-            Spacer()
+        LazyVGrid(columns: layout){
+            
             Button(){
                 hapticManager?.playHudsonOne() ?? {
                     print("haptics not availible")
@@ -22,10 +33,14 @@ struct ContentView: View {
                 
             } label: {
                 Text("Hudson Thump")
-                    .padding()
+                    .padding(10)
                     .background(.secondary)
             }
-            Spacer()
+            
+            Button("SOS"){
+                hapticManager?.playSOS()
+            }.padding()
+                
             Button(){
                 //With this hapticManager system this is how we call an actual haptic event, the ? if missing will flag errors as well, seems good. The optional for if there is no haptics is more concise than an if statement here, but it is a little less obvious to a reader that doesn't understand optionals fully. I wonder if this is faster than an if else statement?
                 // Also of note, when using autocomplete to fill in a .playxxx() it will add the ? to hapticManager automatically
@@ -34,10 +49,10 @@ struct ContentView: View {
                 }()
             } label: {
                 Text("Tetlaw Slice")
-                    .padding()
+                    .padding(10)
                     .background(.secondary)
             }
-            Spacer()
+            
         }
     }
 }
