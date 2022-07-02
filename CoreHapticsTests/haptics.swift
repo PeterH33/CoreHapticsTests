@@ -99,7 +99,10 @@ class HapticManager {
             print("Failed to play Haptic: \(error)")
         }
     }
+    
+    
 }
+
 
 //Follow this format to create new haptic patterns.
 extension HapticManager {
@@ -132,7 +135,6 @@ extension HapticManager {
         return try CHHapticPattern(events: [slice, snip], parameters: [])
     }
 }
-
 
 extension HapticManager {
     func playHudsonOne(){

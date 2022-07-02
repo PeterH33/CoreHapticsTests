@@ -7,12 +7,6 @@
 //Just a test field to make sure that things work and show the useage of the Class
 
 import SwiftUI
-struct ButtonCode{
-    var closure: (() -> Void)?
-    var name: String
-}
-
-
 
 
 struct ContentView: View {
@@ -24,31 +18,18 @@ struct ContentView: View {
     ]
     
     var body: some View {
+        
         LazyVGrid(columns: layout){
+            DemoButtons(hapticManager: hapticManager)
             
+            //With this hapticManager system this is how we call an actual haptic event, the ? if missing will flag errors as well, seems good. The optional for if there is no haptics is more concise than an if statement here, but it is a little less obvious to a reader that doesn't understand optionals fully. I wonder if this is faster than an if else statement?
+            // Also of note, when using autocomplete to fill in a .playxxx() it will add the ? to hapticManager automatically
             Button(){
                 hapticManager?.playHudsonOne() ?? {
                     print("haptics not availible")
                 }()
-                
             } label: {
                 Text("Hudson Thump")
-                    .padding(10)
-                    .background(.secondary)
-            }
-            
-            Button("SOS"){
-                hapticManager?.playSOS()
-            }.padding()
-                
-            Button(){
-                //With this hapticManager system this is how we call an actual haptic event, the ? if missing will flag errors as well, seems good. The optional for if there is no haptics is more concise than an if statement here, but it is a little less obvious to a reader that doesn't understand optionals fully. I wonder if this is faster than an if else statement?
-                // Also of note, when using autocomplete to fill in a .playxxx() it will add the ? to hapticManager automatically
-                hapticManager?.playSlice() ?? {
-                    print("no haptics!")
-                }()
-            } label: {
-                Text("Tetlaw Slice")
                     .padding(10)
                     .background(.secondary)
             }
