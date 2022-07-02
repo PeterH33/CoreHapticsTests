@@ -76,18 +76,18 @@ class HapticManager {
     
     //TODO: The two playHaptic functions might be better turned into a bool in the hapticManager init, set it to do one or the other for individual programs
     //Use this for long stretches of haptic happterns, or when you want to pattern to start more quickly and consistently
-    private func playHaptic(_ pattern : CHHapticPattern){
-        do {
-            try hapticEngine.start()
-            let player = try hapticEngine.makePlayer(with: pattern)
-            try player.start(atTime: CHHapticTimeImmediate)
-        } catch {
-            print("Failed to play Haptic: \(error)")
-        }
+    func playHaptic(_ pattern : CHHapticPattern){
+    do {
+        try hapticEngine.start()
+        let player = try hapticEngine.makePlayer(with: pattern)
+        try player.start(atTime: CHHapticTimeImmediate)
+    } catch {
+        print("Failed to play Haptic: \(error)")
     }
+}
     
     //Use this for intermitent short haptics that do not need to be perfectly snappy
-    private func playShortHaptic(_ pattern : CHHapticPattern){
+    func playShortHaptic(_ pattern : CHHapticPattern){
         do {
             try hapticEngine.start()
             let player = try hapticEngine.makePlayer(with: pattern)
@@ -103,8 +103,86 @@ class HapticManager {
     
 }
 
+//Random dice
+//WIP: This is currently just the second half of boomSparkle, need to play with things, will make an interface to play with things next
+extension HapticManager{
+    func playRandomDice(){
+        if let pattern = try? randomDicePattern() {
+            playHaptic(pattern)
+        }
+    }
+    
+    private func randomDicePattern() throws -> CHHapticPattern{
+        var events = [CHHapticEvent]()
+        let curves = [CHHapticParameterCurve]()
 
-//Follow this format to create new haptic patterns.
+//        do {
+//            // create one continuous buzz that fades out
+//            let sharpness = CHHapticEventParameter(parameterID: .hapticSharpness, value: 0)
+//            let intensity = CHHapticEventParameter(parameterID: .hapticIntensity, value: 1)
+//
+//            let start = CHHapticParameterCurve.ControlPoint(relativeTime: 0, value: 1)
+//            let end = CHHapticParameterCurve.ControlPoint(relativeTime: 1.5, value: 0)
+//
+//            let parameter = CHHapticParameterCurve(parameterID: .hapticIntensityControl, controlPoints: [start, end], relativeTime: 0)
+//            let event = CHHapticEvent(eventType: .hapticContinuous, parameters: [sharpness, intensity], relativeTime: 0, duration: 1.5)
+//            events.append(event)
+//            curves.append(parameter)
+//        }
+
+        for _ in 1...16 {
+            // make some sparkles
+            let sharpness = CHHapticEventParameter(parameterID: .hapticSharpness, value: 1)
+            let intensity = CHHapticEventParameter(parameterID: .hapticIntensity, value: 1)
+            let event = CHHapticEvent(eventType: .hapticTransient, parameters: [sharpness, intensity], relativeTime: TimeInterval.random(in: 0.1...1))
+            events.append(event)
+        }
+        
+        return try CHHapticPattern(events: events, parameterCurves: curves)
+    }
+}
+
+//Boom sparkle
+extension HapticManager{
+    func playBoomSparkle(){
+        if let pattern = try? boomSparklePattern() {
+            playHaptic(pattern)
+        }
+    }
+    
+    private func boomSparklePattern() throws -> CHHapticPattern{
+        
+        var events = [CHHapticEvent]()
+        var curves = [CHHapticParameterCurve]()
+
+        do {
+            // create one continuous buzz that fades out
+            let sharpness = CHHapticEventParameter(parameterID: .hapticSharpness, value: 0)
+            let intensity = CHHapticEventParameter(parameterID: .hapticIntensity, value: 1)
+
+            let start = CHHapticParameterCurve.ControlPoint(relativeTime: 0, value: 1)
+            let end = CHHapticParameterCurve.ControlPoint(relativeTime: 1.5, value: 0)
+
+            let parameter = CHHapticParameterCurve(parameterID: .hapticIntensityControl, controlPoints: [start, end], relativeTime: 0)
+            let event = CHHapticEvent(eventType: .hapticContinuous, parameters: [sharpness, intensity], relativeTime: 0, duration: 1.5)
+            events.append(event)
+            curves.append(parameter)
+        }
+
+        for _ in 1...16 {
+            // make some sparkles
+            let sharpness = CHHapticEventParameter(parameterID: .hapticSharpness, value: 1)
+            let intensity = CHHapticEventParameter(parameterID: .hapticIntensity, value: 1)
+            let event = CHHapticEvent(eventType: .hapticTransient, parameters: [sharpness, intensity], relativeTime: TimeInterval.random(in: 0.1...1))
+            events.append(event)
+        }
+        
+        return try CHHapticPattern(events: events, parameterCurves: curves)
+
+    }
+}
+
+//Snip
 extension HapticManager {
 
     //This code should either give us the pattern and run it, or it will fail to get the pattern and do nothing. The program will keep going without the haptic feedback. If there is some strange behavior you can probably handle it in here.
@@ -136,6 +214,7 @@ extension HapticManager {
     }
 }
 
+//Long boom
 extension HapticManager {
     func playHudsonOne(){
         if let pattern = try? hudsonOnePattern() {
@@ -163,6 +242,7 @@ extension HapticManager {
     }
 }
 
+//SOS
 extension HapticManager{
     func playSOS(){
         if let pattern = try? SOSPattern() {

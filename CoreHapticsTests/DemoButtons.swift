@@ -10,11 +10,34 @@ import SwiftUI
 //I am sure that there is a way to simplify this and not have to repeatedly make buttons instead just passing in the function and name
 struct DemoButtons: View {
     var hapticManager:HapticManager?
+    
+    let layout = [
+        GridItem(.adaptive(minimum: 80, maximum: 200)),
+    ]
+    
     var body: some View {
-        Group{
-            //With this hapticManager system this is how we call an actual haptic event, the ? if missing will flag errors as well, seems good. The optional for if there is no haptics is more concise than an if statement here, but it is a little less obvious to a reader that doesn't understand optionals fully. I wonder if this is faster than an if else statement?
-            // Also of note, when using autocomplete to fill in a .playxxx() it will add the ? to hapticManager automatically
+        
+        LazyVGrid(columns: layout){
             
+            Button(){
+                hapticManager?.playRandomDice() ?? {
+                    print("haptics not availible")
+                }()
+            } label: {
+                Text("Random Dice")
+                    .padding(10)
+                    .background(.secondary)
+            }
+            
+            Button(){
+                hapticManager?.playHudsonOne() ?? {
+                    print("haptics not availible")
+                }()
+            } label: {
+                Text("Hudson Thump")
+                    .padding(10)
+                    .background(.secondary)
+            }
             
             Button(){
                 hapticManager?.playSOS()
@@ -23,7 +46,15 @@ struct DemoButtons: View {
                     .padding()
                     .background(.secondary)
             }
-                
+            
+            Button(){
+                hapticManager?.playBoomSparkle()
+            } label: {
+                Text("Boom Sparkle")
+                    .padding()
+                    .background(.secondary)
+            }
+            
             Button(){
                 hapticManager?.playSlice() ?? {
                     print("no haptics!")
@@ -34,10 +65,7 @@ struct DemoButtons: View {
                     .background(.secondary)
             }
             
-            
-            
-            
-            
         }
+        
     }
 }

@@ -4,36 +4,25 @@
 //
 //  Created by Peter Hartnett on 6/30/22.
 //
-//Just a test field to make sure that things work and show the useage of the Class
+//  Descriptions for how the haptics class work are in haptics.swift
 
 import SwiftUI
 
 
 struct ContentView: View {
-    //This version lets us call any haptic event via the below button, if its availible and not nil it will run the function, if not nothing happens. Pretty clean implementation.
+    
     private var hapticManager = HapticManager()
     
-    let layout = [
-        GridItem(.adaptive(minimum: 80, maximum: 200)),
-    ]
-    
     var body: some View {
-        
-        LazyVGrid(columns: layout){
+        TabView{
             DemoButtons(hapticManager: hapticManager)
-            
-            //With this hapticManager system this is how we call an actual haptic event, the ? if missing will flag errors as well, seems good. The optional for if there is no haptics is more concise than an if statement here, but it is a little less obvious to a reader that doesn't understand optionals fully. I wonder if this is faster than an if else statement?
-            // Also of note, when using autocomplete to fill in a .playxxx() it will add the ? to hapticManager automatically
-            Button(){
-                hapticManager?.playHudsonOne() ?? {
-                    print("haptics not availible")
-                }()
-            } label: {
-                Text("Hudson Thump")
-                    .padding(10)
-                    .background(.secondary)
-            }
-            
+                .tabItem{
+                    Label("Demo", systemImage: "gear")
+                }
+            Text("Haptic Maker")
+                .tabItem{
+                    Label("Haptic Designer", systemImage: "gearshape.2")
+                }
         }
     }
 }
