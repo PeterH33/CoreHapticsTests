@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4C2172AC2870A01F00107807 /* DemoButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2172AB2870A01F00107807 /* DemoButtons.swift */; };
+		4C2172AE2870E86500107807 /* DesignerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2172AD2870E86500107807 /* DesignerView.swift */; };
 		4C257605286DE7CA00B1FF09 /* CoreHapticsTestsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C257604286DE7CA00B1FF09 /* CoreHapticsTestsApp.swift */; };
 		4C257607286DE7CA00B1FF09 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C257606286DE7CA00B1FF09 /* ContentView.swift */; };
 		4C257609286DE7CB00B1FF09 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C257608286DE7CB00B1FF09 /* Assets.xcassets */; };
@@ -17,6 +18,7 @@
 
 /* Begin PBXFileReference section */
 		4C2172AB2870A01F00107807 /* DemoButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoButtons.swift; sourceTree = "<group>"; };
+		4C2172AD2870E86500107807 /* DesignerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignerView.swift; sourceTree = "<group>"; };
 		4C257601286DE7CA00B1FF09 /* CoreHapticsTests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoreHapticsTests.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C257604286DE7CA00B1FF09 /* CoreHapticsTestsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreHapticsTestsApp.swift; sourceTree = "<group>"; };
 		4C257606286DE7CA00B1FF09 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -57,6 +59,7 @@
 			children = (
 				4C257604286DE7CA00B1FF09 /* CoreHapticsTestsApp.swift */,
 				4C257606286DE7CA00B1FF09 /* ContentView.swift */,
+				4C2172AD2870E86500107807 /* DesignerView.swift */,
 				4C2172AB2870A01F00107807 /* DemoButtons.swift */,
 				4C257612286E094900B1FF09 /* haptics.swift */,
 				4C257608286DE7CB00B1FF09 /* Assets.xcassets */,
@@ -143,6 +146,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C2172AE2870E86500107807 /* DesignerView.swift in Sources */,
 				4C257607286DE7CA00B1FF09 /* ContentView.swift in Sources */,
 				4C257605286DE7CA00B1FF09 /* CoreHapticsTestsApp.swift in Sources */,
 				4C257613286E094900B1FF09 /* haptics.swift in Sources */,

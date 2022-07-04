@@ -14,15 +14,20 @@ struct ContentView: View {
     private var hapticManager = HapticManager()
     
     var body: some View {
-        TabView{
-            DemoButtons(hapticManager: hapticManager)
-                .tabItem{
-                    Label("Demo", systemImage: "gear")
-                }
-            Text("Haptic Maker")
-                .tabItem{
-                    Label("Haptic Designer", systemImage: "gearshape.2")
-                }
+        VStack{
+            
+            
+            TabView{
+                DemoButtons(hapticManager: hapticManager)
+                    .tabItem{
+                        Label("Demo", systemImage: "gear")
+                    }
+                DesignerView(hapticManager: hapticManager)
+                    .tabItem{
+                        Label("Haptic Designer", systemImage: "gearshape.2")
+                    }
+            }
+            
         }
     }
 }

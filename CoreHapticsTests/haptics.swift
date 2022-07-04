@@ -242,6 +242,25 @@ extension HapticManager {
     }
 }
 
+//playTest is for accepting parameters and testing how the resulting haptic feels. I suppose this oculd be used to run a much simpler in line interface too....
+extension HapticManager{
+    func playHaptic(sharpness: Double, intensity: Double){
+        if let pattern = try? testPattern(sharpnessIn: sharpness, intensityIn: intensity) {
+            playHaptic(pattern)
+        }
+    }
+    
+    private func testPattern(sharpnessIn: Double, intensityIn: Double) throws -> CHHapticPattern{
+        let sharpness = CHHapticEventParameter(parameterID: .hapticSharpness, value: Float(sharpnessIn))
+        let intensity = CHHapticEventParameter(parameterID: .hapticIntensity, value: Float(intensityIn))
+        
+        let event = CHHapticEvent(eventType: .hapticContinuous, parameters: [sharpness, intensity], relativeTime: 0, duration: 1)
+        
+        return try CHHapticPattern(events: [event], parameterCurves: [])
+    }
+    
+}
+
 //SOS
 extension HapticManager{
     func playSOS(){
