@@ -19,7 +19,7 @@ struct DemoButtons: View {
         VStack{
             Label("Demo/Previews", systemImage: "gear")
             LazyVGrid(columns: layout){
-                //TODO: This should really be a foreach with some sort of simple reference list derived from the availible functions in haptics.
+                //TODO: This should really be a foreach with some sort of simple reference list derived from the available functions in haptics.
                 
                 Button(){
                     hapticManager?.playRandomDice() ?? {
@@ -33,7 +33,7 @@ struct DemoButtons: View {
                 
                 Button(){
                     hapticManager?.playHudsonOne() ?? {
-                        print("haptics not availible")
+                        print("haptics not available")
                     }()
                 } label: {
                     Text("Hudson Thump")

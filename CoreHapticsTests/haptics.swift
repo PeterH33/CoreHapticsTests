@@ -6,15 +6,15 @@
 //  Concepts and code parts from Andrew Tetlaw at https://www.raywenderlich.com/10608020-getting-started-with-core-haptics
 //  and from Paul Hudson at https://www.hackingwithswift.com/example-code/core-haptics/how-to-play-custom-vibrations-using-core-haptics
 
-//The point of this class is to make the CoreHaptics system a bit easier to implement in a swiftui project.
-// Useage:
+//The point of this class is to make the CoreHaptics system a bit easier to implement in a swiftUI project.
+// Usage:
 // 1- Drop this file into a project.
 // 2- The view or controller etc. you want to use haptics create an instance of this class
 // 3- use yourClassInstance?.playSlice to play that haptic as defined below
-// 4- if you want to use an alternate code when haptics is not availible, follow #3 with ?? { what you want to do without haptics }()
+// 4- if you want to use an alternate code when haptics is not available, follow #3 with ?? { what you want to do without haptics }()
 // 5- Define new haptic patterns using the format below in the HapticManager extensions
 
-// I am sure there is a better way to write all of the above let me know if it is hard to understand or if there are other issues that arrise
+// I am sure there is a better way to write all of the above let me know if it is hard to understand or if there are other issues that arise
 
 //TODO: Extend the code further to allow for encoding and decoding patterns to send to other people, or to save in the case of a system that would give a visual system for creating haptics
 //TODO: Create a visual haptics creator program to accompany this format.
@@ -75,7 +75,7 @@ class HapticManager {
     }
     
     //TODO: The two playHaptic functions might be better turned into a bool in the hapticManager init, set it to do one or the other for individual programs
-    //Use this for long stretches of haptic happterns, or when you want to pattern to start more quickly and consistently
+    //Use this for long stretches of haptic patterns, or when you want to pattern to start more quickly and consistently
     func playHaptic(_ pattern : CHHapticPattern){
     do {
         try hapticEngine.start()
@@ -86,7 +86,7 @@ class HapticManager {
     }
 }
     
-    //Use this for intermitent short haptics that do not need to be perfectly snappy
+    //Use this for intermittent short haptics that do not need to be perfectly snappy
     func playShortHaptic(_ pattern : CHHapticPattern){
         do {
             try hapticEngine.start()
@@ -242,7 +242,7 @@ extension HapticManager {
     }
 }
 
-//playTest is for accepting parameters and testing how the resulting haptic feels. I suppose this oculd be used to run a much simpler in line interface too....
+//playTest is for accepting parameters and testing how the resulting haptic feels. I suppose this could be used to run a much simpler in line interface too....
 extension HapticManager{
     func playHaptic(sharpness: Double, intensity: Double){
         if let pattern = try? testPattern(sharpnessIn: sharpness, intensityIn: intensity) {
